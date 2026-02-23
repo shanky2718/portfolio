@@ -5,7 +5,7 @@ A modern, interactive, 3D animated developer portfolio built using pure HTML, CS
 Live Portfolio: (Add your deployed link here)
 
 ---
-
+link to access-https://portfoliosm18.netlify.app/
 ## 👨‍💻 About Me
 
 I am a Computer Science and Mathematics undergraduate based in Bengaluru, India, with hands-on experience in full-stack development, AI systems, cybersecurity fundamentals, and cloud technologies.
