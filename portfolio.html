@@ -17,17 +17,17 @@
 
     <style>
         :root {
-            --bg-dark: #030308;
-            --primary: #6d28d9;
-            /* Modern Violet */
-            --secondary: #0ea5e9;
-            /* Sky Blue */
-            --accent: #f472b6;
-            /* Pink Accent */
-            --text-main: #f8fafc;
+            --bg-dark: #020205;
+            --primary: #944dff;
+            /* Galactic Purple */
+            --secondary: #00d4ff;
+            /* Cosmic Cyan */
+            --accent: #ff007a;
+            /* Nebula Pink */
+            --text-main: #e2e8f0;
             --text-dim: #94a3b8;
-            --glass: rgba(15, 23, 42, 0.4);
-            --glass-border: rgba(255, 255, 255, 0.05);
+            --glass: rgba(10, 10, 20, 0.6);
+            --glass-border: rgba(255, 255, 255, 0.08);
             --font-main: 'Outfit', sans-serif;
             --font-hdr: 'Space Grotesk', sans-serif;
             --font-mono: 'JetBrains Mono', monospace;
@@ -48,24 +48,26 @@
             line-height: 1.6;
         }
 
-        /* --- Custom Background System --- */
+        /* --- Cosmic Background --- */
         #bg-canvas {
             position: fixed;
             inset: 0;
             z-index: -1;
             pointer-events: none;
-            background: radial-gradient(circle at 50% 50%, #0a0a20 0%, #030308 100%);
+            background: radial-gradient(circle at 50% 50%, #0a0a1a 0%, #020205 100%);
         }
 
         .bg-grid {
             position: fixed;
             inset: 0;
-            background-image: linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-            background-size: 80px 80px;
+            background-image: linear-gradient(rgba(148, 77, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(148, 77, 255, 0.05) 1px, transparent 1px);
+            background-size: 100px 100px;
             z-index: -2;
             pointer-events: none;
-            animation: gridMove 20s linear infinite;
+            perspective: 1000px;
+            transform: rotateX(20deg);
+            opacity: 0.5;
         }
 
         @keyframes gridMove {
@@ -78,16 +80,28 @@
             }
         }
 
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
         /* --- Premium Cursor --- */
         #cursor-main {
-            width: 10px;
-            height: 10px;
-            background: #fff;
+            width: 8px;
+            height: 8px;
+            background: var(--secondary);
             border-radius: 50%;
             position: fixed;
             pointer-events: none;
             z-index: 10000;
-            mix-blend-mode: difference;
+            box-shadow: 0 0 15px var(--secondary);
         }
 
         #cursor-outline {
@@ -409,13 +423,24 @@
         }
 
         @media (max-width: 768px) {
+
+            #cursor-main,
+            #cursor-outline,
+            .cursor-particle {
+                display: none !important;
+            }
+
+            * {
+                cursor: auto !important;
+            }
+
             nav#sidebar {
                 width: 100%;
-                height: 70px;
+                height: 65px;
                 top: auto;
                 bottom: 0;
                 flex-direction: row;
-                padding: 0 20px;
+                padding: 0 10px;
                 border-right: none;
                 border-top: 1px solid var(--glass-border);
             }
@@ -424,7 +449,7 @@
                 flex-direction: row;
                 width: 100%;
                 justify-content: space-around;
-                gap: 0;
+                gap: 5px;
             }
 
             .nav-link {
@@ -437,11 +462,36 @@
             }
 
             section {
-                padding: 80px 6%;
+                padding: 60px 20px;
+            }
+
+            .glass-panel {
+                padding: 30px 20px;
+            }
+
+            .project-grid {
+                grid-template-columns: 1fr;
             }
 
             .research-box {
                 grid-template-columns: 1fr;
+            }
+
+            .contact-form-grid {
+                grid-template-columns: 1fr !important;
+            }
+
+            .typing-box {
+                font-size: 1.1rem;
+            }
+
+            .section-tag {
+                font-size: 0.65rem;
+                padding: 4px 12px;
+            }
+
+            .nav-link i {
+                font-size: 1.5rem;
             }
         }
 
@@ -500,6 +550,75 @@
             opacity: 0;
             visibility: hidden;
         }
+
+        /* --- Hero Image Gallery --- */
+        .hero-gallery {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 50px;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .hero-img-wrapper {
+            aspect-ratio: 4/5;
+            border-radius: 24px;
+            overflow: hidden;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            transform: translateY(50px);
+            opacity: 0;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+            transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+            animation: cosmicFloat 6s ease-in-out infinite;
+        }
+
+        @keyframes cosmicFloat {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-15px);
+            }
+        }
+
+        #hero-img-1 {
+            animation-delay: 0s;
+        }
+
+        #hero-img-2 {
+            animation-delay: 1.5s;
+        }
+
+        #hero-img-3 {
+            animation-delay: 3s;
+        }
+
+        .hero-img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        .hero-img-wrapper:hover img {
+            transform: scale(1.08);
+        }
+
+        @media (max-width: 768px) {
+            .hero-gallery {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .hero-img-wrapper {
+                aspect-ratio: 16/9;
+            }
+        }
     </style>
 </head>
 
@@ -520,349 +639,389 @@
     <div id="cursor-main"></div>
     <div id="cursor-outline"></div>
 
-    <nav id="sidebar">
-        <a href="#home" class="nav-logo">SMV</a>
-        <div class="nav-links">
-            <a href="#home" class="nav-link active"><i data-lucide="home"></i> <span>Home</span></a>
-            <a href="#about" class="nav-link"><i data-lucide="user"></i> <span>About</span></a>
-            <a href="#skills" class="nav-link"><i data-lucide="zap"></i> <span>Skills</span></a>
-            <a href="#experience" class="nav-link"><i data-lucide="briefcase"></i> <span>Experience</span></a>
-            <a href="#education" class="nav-link"><i data-lucide="graduation-cap"></i> <span>Education</span></a>
-            <a href="#projects" class="nav-link"><i data-lucide="layout"></i> <span>Projects</span></a>
-            <a href="#research" class="nav-link"><i data-lucide="flask-conical"></i> <span>Research</span></a>
-            <a href="#contact" class="nav-link"><i data-lucide="send"></i> <span>Contact</span></a>
-        </div>
-    </nav>
+    <div id="main-app">
 
-    <main>
-        <!-- Home -->
-        <section id="home">
-            <span class="section-tag"
-                style="animation: float 3s ease-in-out infinite;">ENGINEERING_INTELLIGENCE_DEPLOYED</span>
-            <h1 id="hero-name">SHASHANK<br>M VATHAR</h1>
-            <div class="typing-box">
-                <span id="type-target"></span><span class="typing-cursor"></span>
+        <nav id="sidebar">
+            <a href="#home" class="nav-logo">SMV</a>
+            <div class="nav-links">
+                <a href="#home" class="nav-link active"><i data-lucide="home"></i> <span>Home</span></a>
+                <a href="#about" class="nav-link"><i data-lucide="user"></i> <span>About</span></a>
+                <a href="#skills" class="nav-link"><i data-lucide="zap"></i> <span>Skills</span></a>
+                <a href="#experience" class="nav-link"><i data-lucide="briefcase"></i> <span>Experience</span></a>
+                <a href="#education" class="nav-link"><i data-lucide="graduation-cap"></i> <span>Education</span></a>
+                <a href="#projects" class="nav-link"><i data-lucide="layout"></i> <span>Projects</span></a>
+                <a href="#research" class="nav-link"><i data-lucide="flask-conical"></i> <span>Research</span></a>
+                <a href="#contact" class="nav-link"><i data-lucide="send"></i> <span>Contact</span></a>
             </div>
-            <div style="margin-top: 50px;">
-                <a href="#projects" class="mag-btn">Explore Work</a>
-            </div>
-        </section>
+        </nav>
 
-        <!-- About -->
-        <section id="about">
-            <span class="section-tag">/INCEPTION</span>
-            <h2 style="font-family: var(--font-hdr); font-size: 3rem; margin-bottom: 40px;">Professional Core</h2>
-            <div class="glass-panel reveal" style="padding: 60px;">
-                <p style="font-size: 1.4rem; line-height: 1.8; font-weight: 300; color: var(--text-dim);">
-                    Detail-oriented Computer Science and Mathematics undergraduate with hands-on experience in
-                    full-stack web and mobile application development, AI systems, cybersecurity fundamentals, and data
-                    analytics. Proficient in Python, SQL, modern web technologies, and scalable architecture design.
-                </p>
-            </div>
-        </section>
+        <main>
+            <!-- Home -->
+            <section id="home">
+                <span class="section-tag"
+                    style="animation: float 3s ease-in-out infinite;">ENGINEERING_INTELLIGENCE_DEPLOYED</span>
+                <h1 id="hero-name">SHASHANK<br>M VATHAR</h1>
+                <div class="typing-box">
+                    <span id="type-target"></span><span class="typing-cursor"></span>
+                </div>
 
-        <!-- Skills -->
-        <section id="skills">
-            <span class="section-tag">/CAPABILITIES</span>
-            <h2 style="font-family: var(--font-hdr); font-size: 3rem; margin-bottom: 40px;">Technical Stack</h2>
-            <div class="project-grid reveal">
-                <div class="glass-panel" style="padding: 40px;">
-                    <h3
-                        style="font-family: var(--font-hdr); color: var(--secondary); margin-bottom: 25px; letter-spacing: 2px;">
-                        PROGRAMMING</h3>
-                    <div style="display: flex; flex-wrap: wrap; gap: 10px;">
-                        <span class="section-tag">Python</span><span class="section-tag">Java</span>
-                        <span class="section-tag">C</span><span class="section-tag">Kotlin</span>
+                <div class="hero-gallery">
+                    <div class="hero-img-wrapper" id="hero-img-1">
+                        <img src="assets/hero1.jpg" alt="Shashank 1">
                     </div>
-                    <h3
-                        style="font-family: var(--font-hdr); color: var(--primary); margin-top: 30px; margin-bottom: 25px; letter-spacing: 2px;">
-                        WEB_STACK</h3>
-                    <div style="display: flex; flex-wrap: wrap; gap: 10px;">
-                        <span class="section-tag">HTML</span><span class="section-tag">CSS</span>
-                        <span class="section-tag">JavaScript</span><span class="section-tag">PHP</span>
-                        <span class="section-tag">React.js</span>
+                    <div class="hero-img-wrapper" id="hero-img-2">
+                        <img src="assets/hero2.jpg" alt="Shashank 2">
+                    </div>
+                    <div class="hero-img-wrapper" id="hero-img-3">
+                        <img src="assets/hero3.jpg" alt="Shashank 3">
                     </div>
                 </div>
-                <div class="glass-panel" style="padding: 40px;">
-                    <h3
-                        style="font-family: var(--font-hdr); color: var(--secondary); margin-bottom: 25px; letter-spacing: 2px;">
-                        DATA_&_CLOUD</h3>
-                    <div style="display: flex; flex-wrap: wrap; gap: 10px;">
-                        <span class="section-tag">MySQL</span><span class="section-tag">AWS</span>
-                    </div>
-                    <h3
-                        style="font-family: var(--font-hdr); color: var(--primary); margin-top: 30px; margin-bottom: 25px; letter-spacing: 2px;">
-                        MOBILE_DEV</h3>
-                    <div style="display: flex; flex-wrap: wrap; gap: 10px;">
-                        <span class="section-tag">Android (Kotlin)</span><span class="section-tag">Flutter</span>
-                    </div>
-                </div>
-                <div class="glass-panel" style="padding: 40px;">
-                    <h3
-                        style="font-family: var(--font-hdr); color: var(--secondary); margin-bottom: 25px; letter-spacing: 2px;">
-                        TOOLS_&_OS</h3>
-                    <div style="display: flex; flex-wrap: wrap; gap: 10px;">
-                        <span class="section-tag">Git</span><span class="section-tag">GitHub</span>
-                        <span class="section-tag">Netlify</span><span class="section-tag">VS Code</span>
-                        <span class="section-tag">Android Studio</span><span class="section-tag">Jupyter</span>
-                        <span class="section-tag">XAMPP</span><span class="section-tag">WAMP</span>
-                    </div>
-                    <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px;">
-                        <span class="section-tag">Windows</span><span class="section-tag">Linux</span>
-                    </div>
-                </div>
-            </div>
-        </section>
 
-        <!-- Experience -->
-        <section id="experience">
-            <span class="section-tag">/CHRONICLE</span>
-            <h2 style="font-family: var(--font-hdr); font-size: 3rem; margin-bottom: 40px;">History</h2>
-            <div class="reveal">
-                <!-- Zido Development -->
-                <div class="glass-panel" style="margin-bottom: 30px; border-left: 5px solid var(--primary);">
-                    <div
-                        style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px;">
-                        <div>
-                            <h3 style="font-family: var(--font-hdr); font-size: 1.5rem;">Web Developer Intern</h3>
-                            <h4
-                                style="font-family: var(--font-mono); font-size: 0.9rem; color: var(--secondary); margin-top: 5px;">
-                                ZIDO DEVELOPMENT</h4>
+                <div style="margin-top: 50px;">
+                    <a href="#projects" class="mag-btn">Explore Work</a>
+                </div>
+            </section>
+
+            <!-- About -->
+            <section id="about">
+                <span class="section-tag">/INCEPTION</span>
+                <h2 style="font-family: var(--font-hdr); font-size: 3rem; margin-bottom: 40px;">Professional Core</h2>
+                <div class="glass-panel reveal" style="padding: 60px;">
+                    <p style="font-size: 1.4rem; line-height: 1.8; font-weight: 300; color: var(--text-dim);">
+                        Detail-oriented Computer Science and Mathematics undergraduate with hands-on experience in
+                        full-stack web and mobile application development, AI systems, cybersecurity fundamentals, and
+                        data
+                        analytics. Proficient in Python, SQL, modern web technologies, and scalable architecture design.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Skills -->
+            <section id="skills">
+                <span class="section-tag">/CAPABILITIES</span>
+                <h2 style="font-family: var(--font-hdr); font-size: 3rem; margin-bottom: 40px;">Technical Stack</h2>
+                <div class="project-grid reveal">
+                    <div class="glass-panel" style="padding: 40px;">
+                        <h3
+                            style="font-family: var(--font-hdr); color: var(--secondary); margin-bottom: 25px; letter-spacing: 2px;">
+                            PROGRAMMING</h3>
+                        <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+                            <span class="section-tag">Python</span><span class="section-tag">Java</span>
+                            <span class="section-tag">C</span><span class="section-tag">Kotlin</span>
                         </div>
-                        <span style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-dim);">APR 2024
-                            – MAY 2024</span>
-                    </div>
-                    <ul style="color: var(--text-dim); padding-left: 20px; list-style-type: none;">
-                        <li style="margin-bottom: 10px;">• Engineered a full-stack web application using the MERN stack
-                            with JWT-based authentication for secure user session management.</li>
-                        <li style="margin-bottom: 10px;">• Designed and implemented protected REST APIs with role-based
-                            access control to ensure data security and integrity.</li>
-                        <li>• Contributed to database schema design, improving query efficiency and data organization.
-                        </li>
-                    </ul>
-                </div>
-
-                <!-- NullClass Development -->
-                <div class="glass-panel" style="margin-bottom: 30px; border-left: 5px solid var(--secondary);">
-                    <div
-                        style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px;">
-                        <div>
-                            <h3 style="font-family: var(--font-hdr); font-size: 1.5rem;">Web Developer Intern</h3>
-                            <h4
-                                style="font-family: var(--font-mono); font-size: 0.9rem; color: var(--primary); margin-top: 5px;">
-                                NULLCLASS DEVELOPMENT</h4>
-                        </div>
-                        <span style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-dim);">MAR
-                            2024</span>
-                    </div>
-                    <ul style="color: var(--text-dim); padding-left: 20px; list-style-type: none;">
-                        <li style="margin-bottom: 10px;">• Developed a fully functional YouTube clone website from
-                            scratch during an intensive one-month internship.</li>
-                        <li style="margin-bottom: 10px;">• Built responsive UI components using HTML, CSS, JavaScript,
-                            and React.js, including video playback and dynamic search functionality.</li>
-                        <li>• Delivered the completed project through a formal presentation, demonstrating rapid
-                            learning and practical frontend development skills.</li>
-                    </ul>
-                </div>
-
-                <!-- Prodigy Infotech -->
-                <div class="glass-panel" style="margin-bottom: 30px; border-left: 5px solid #fff;">
-                    <div
-                        style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px;">
-                        <div>
-                            <h3 style="font-family: var(--font-hdr); font-size: 1.5rem;">Web Developer Intern</h3>
-                            <h4
-                                style="font-family: var(--font-mono); font-size: 0.9rem; color: var(--secondary); margin-top: 5px;">
-                                PRODIGY INFOTECH</h4>
-                        </div>
-                        <span style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-dim);">MAY 2024
-                            – JUN 2024</span>
-                    </div>
-                    <ul style="color: var(--text-dim); padding-left: 20px; list-style-type: none;">
-                        <li style="margin-bottom: 10px;">• Developed a responsive YouTube clone implementing reusable
-                            components, navigation bar, and interactive video cards.</li>
-                        <li>• Translated UI/UX designs into clean, maintainable, and scalable frontend code.</li>
-                    </ul>
-                </div>
-
-                <!-- Codec Technologies -->
-                <div class="glass-panel" style="margin-bottom: 30px; border-left: 5px solid var(--primary);">
-                    <div
-                        style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px;">
-                        <div>
-                            <h3 style="font-family: var(--font-hdr); font-size: 1.5rem;">Python Developer Intern</h3>
-                            <h4
-                                style="font-family: var(--font-mono); font-size: 0.9rem; color: var(--secondary); margin-top: 5px;">
-                                CODEC TECHNOLOGIES</h4>
+                        <h3
+                            style="font-family: var(--font-hdr); color: var(--primary); margin-top: 30px; margin-bottom: 25px; letter-spacing: 2px;">
+                            WEB_STACK</h3>
+                        <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+                            <span class="section-tag">HTML</span><span class="section-tag">CSS</span>
+                            <span class="section-tag">JavaScript</span><span class="section-tag">PHP</span>
+                            <span class="section-tag">React.js</span>
                         </div>
                     </div>
-                    <p style="color: var(--text-dim);">Engineered Python-based backend automation tools, improved
-                        algorithm efficiency, and optimized enterprise resource logic.</p>
+                    <div class="glass-panel" style="padding: 40px;">
+                        <h3
+                            style="font-family: var(--font-hdr); color: var(--secondary); margin-bottom: 25px; letter-spacing: 2px;">
+                            DATA_&_CLOUD</h3>
+                        <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+                            <span class="section-tag">MySQL</span><span class="section-tag">AWS</span>
+                        </div>
+                        <h3
+                            style="font-family: var(--font-hdr); color: var(--primary); margin-top: 30px; margin-bottom: 25px; letter-spacing: 2px;">
+                            MOBILE_DEV</h3>
+                        <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+                            <span class="section-tag">Android (Kotlin)</span><span class="section-tag">Flutter</span>
+                        </div>
+                    </div>
+                    <div class="glass-panel" style="padding: 40px;">
+                        <h3
+                            style="font-family: var(--font-hdr); color: var(--secondary); margin-bottom: 25px; letter-spacing: 2px;">
+                            TOOLS_&_OS</h3>
+                        <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+                            <span class="section-tag">Git</span><span class="section-tag">GitHub</span>
+                            <span class="section-tag">Netlify</span><span class="section-tag">VS Code</span>
+                            <span class="section-tag">Android Studio</span><span class="section-tag">Jupyter</span>
+                            <span class="section-tag">XAMPP</span><span class="section-tag">WAMP</span>
+                        </div>
+                        <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px;">
+                            <span class="section-tag">Windows</span><span class="section-tag">Linux</span>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <!-- Education -->
-        <section id="education">
-            <span class="section-tag">/EDIFICATION</span>
-            <h2 style="font-family: var(--font-hdr); font-size: 3rem; margin-bottom: 40px;">Academic Foundation</h2>
-            <div class="reveal">
-                <div class="glass-panel" style="border-left: 5px solid var(--primary);">
-                    <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-                        <div>
-                            <h3 style="font-family: var(--font-hdr); font-size: 1.8rem;">Bachelors of Computer Science
-                                and Mathematics</h3>
-                            <h4
-                                style="font-family: var(--font-mono); font-size: 1.1rem; color: var(--secondary); margin-top: 10px;">
-                                CHRIST UNIVERSITY</h4>
-                            <p
-                                style="color: var(--text-dim); margin-top: 20px; font-size: 1rem; max-width: 800px; line-height: 1.8;">
-                                Specialized undergraduate program combining computational theory with rigorous
-                                mathematical analysis. Focused on algorithm design, statistical modeling, and full-stack
-                                engineering principles.
+            <!-- Experience -->
+            <section id="experience">
+                <span class="section-tag">/CHRONICLE</span>
+                <h2 style="font-family: var(--font-hdr); font-size: 3rem; margin-bottom: 40px;">History</h2>
+                <div class="reveal">
+                    <!-- Zido Development -->
+                    <div class="glass-panel" style="margin-bottom: 30px; border-left: 5px solid var(--primary);">
+                        <div
+                            style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px;">
+                            <div>
+                                <h3 style="font-family: var(--font-hdr); font-size: 1.5rem;">Web Developer Intern</h3>
+                                <h4
+                                    style="font-family: var(--font-mono); font-size: 0.9rem; color: var(--secondary); margin-top: 5px;">
+                                    ZIDO DEVELOPMENT</h4>
+                            </div>
+                            <span style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-dim);">APR
+                                2024
+                                – MAY 2024</span>
+                        </div>
+                        <ul style="color: var(--text-dim); padding-left: 20px; list-style-type: none;">
+                            <li style="margin-bottom: 10px;">• Engineered a full-stack web application using the MERN
+                                stack
+                                with JWT-based authentication for secure user session management.</li>
+                            <li style="margin-bottom: 10px;">• Designed and implemented protected REST APIs with
+                                role-based
+                                access control to ensure data security and integrity.</li>
+                            <li>• Contributed to database schema design, improving query efficiency and data
+                                organization.
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- NullClass Development -->
+                    <div class="glass-panel" style="margin-bottom: 30px; border-left: 5px solid var(--secondary);">
+                        <div
+                            style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px;">
+                            <div>
+                                <h3 style="font-family: var(--font-hdr); font-size: 1.5rem;">Web Developer Intern</h3>
+                                <h4
+                                    style="font-family: var(--font-mono); font-size: 0.9rem; color: var(--primary); margin-top: 5px;">
+                                    NULLCLASS DEVELOPMENT</h4>
+                            </div>
+                            <span style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-dim);">MAR
+                                2024</span>
+                        </div>
+                        <ul style="color: var(--text-dim); padding-left: 20px; list-style-type: none;">
+                            <li style="margin-bottom: 10px;">• Developed a fully functional YouTube clone website from
+                                scratch during an intensive one-month internship.</li>
+                            <li style="margin-bottom: 10px;">• Built responsive UI components using HTML, CSS,
+                                JavaScript,
+                                and React.js, including video playback and dynamic search functionality.</li>
+                            <li>• Delivered the completed project through a formal presentation, demonstrating rapid
+                                learning and practical frontend development skills.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Prodigy Infotech -->
+                    <div class="glass-panel" style="margin-bottom: 30px; border-left: 5px solid #fff;">
+                        <div
+                            style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px;">
+                            <div>
+                                <h3 style="font-family: var(--font-hdr); font-size: 1.5rem;">Web Developer Intern</h3>
+                                <h4
+                                    style="font-family: var(--font-mono); font-size: 0.9rem; color: var(--secondary); margin-top: 5px;">
+                                    PRODIGY INFOTECH</h4>
+                            </div>
+                            <span style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-dim);">MAY
+                                2024
+                                – JUN 2024</span>
+                        </div>
+                        <ul style="color: var(--text-dim); padding-left: 20px; list-style-type: none;">
+                            <li style="margin-bottom: 10px;">• Developed a responsive YouTube clone implementing
+                                reusable
+                                components, navigation bar, and interactive video cards.</li>
+                            <li>• Translated UI/UX designs into clean, maintainable, and scalable frontend code.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Codec Technologies -->
+                    <div class="glass-panel" style="margin-bottom: 30px; border-left: 5px solid var(--primary);">
+                        <div
+                            style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px;">
+                            <div>
+                                <h3 style="font-family: var(--font-hdr); font-size: 1.5rem;">Python Developer Intern
+                                </h3>
+                                <h4
+                                    style="font-family: var(--font-mono); font-size: 0.9rem; color: var(--secondary); margin-top: 5px;">
+                                    CODEC TECHNOLOGIES</h4>
+                            </div>
+                        </div>
+                        <p style="color: var(--text-dim);">Engineered Python-based backend automation tools, improved
+                            algorithm efficiency, and optimized enterprise resource logic.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Education -->
+            <section id="education">
+                <span class="section-tag">/EDIFICATION</span>
+                <h2 style="font-family: var(--font-hdr); font-size: 3rem; margin-bottom: 40px;">Academic Foundation</h2>
+                <div class="reveal">
+                    <div class="glass-panel" style="border-left: 5px solid var(--primary);">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                            <div>
+                                <h3 style="font-family: var(--font-hdr); font-size: 1.8rem;">Bachelors of Computer
+                                    Science
+                                    and Mathematics</h3>
+                                <h4
+                                    style="font-family: var(--font-mono); font-size: 1.1rem; color: var(--secondary); margin-top: 10px;">
+                                    CHRIST UNIVERSITY</h4>
+                                <p
+                                    style="color: var(--text-dim); margin-top: 20px; font-size: 1rem; max-width: 800px; line-height: 1.8;">
+                                    Specialized undergraduate program combining computational theory with rigorous
+                                    mathematical analysis. Focused on algorithm design, statistical modeling, and
+                                    full-stack
+                                    engineering principles.
+                                </p>
+                            </div>
+                            <i data-lucide="graduation-cap"
+                                style="width: 50px; height: 50px; color: var(--secondary); opacity: 0.6;"></i>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Projects -->
+            <section id="projects">
+                <span class="section-tag">/MODULES</span>
+                <h2 style="font-family: var(--font-hdr); font-size: 3rem; margin-bottom: 40px;">Hardware Work</h2>
+                <div class="project-grid reveal">
+                    <div class="project-card">
+                        <div class="project-content">
+                            <span
+                                style="color: var(--secondary); font-family: var(--font-mono); font-size: 0.7rem;">CV_MODULE_01</span>
+                            <h3>AI PROCTORING</h3>
+                            <p>Intelligent exam surveillance with gaze tracking and MediaPipe pose triangulation.</p>
+                            <hr style="border: 0.5px solid var(--glass-border); margin: 20px 0;">
+                            <span style="font-family: var(--font-mono); font-size: 0.6rem; color: var(--primary);">PY
+                                TORCH
+                                | OPEN CV | FLASK</span>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <div class="project-content">
+                            <span
+                                style="color: var(--secondary); font-family: var(--font-mono); font-size: 0.7rem;">CV_MODULE_02</span>
+                            <h3>CHEATING MONITOR</h3>
+                            <p>Real-time head movement and tab-switching surveillance for secure assessments.</p>
+                            <hr style="border: 0.5px solid var(--glass-border); margin: 20px 0;">
+                            <span style="font-family: var(--font-mono); font-size: 0.6rem; color: var(--primary);">CV2 |
+                                BEHAVIORAL AI</span>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <div class="project-content">
+                            <span
+                                style="color: var(--secondary); font-family: var(--font-mono); font-size: 0.7rem;">APP_MODULE_01</span>
+                            <h3>MOVIE OTT APP</h3>
+                            <p>Modern Android application featuring MVVM architecture and high-fidelity video
+                                throughput.
                             </p>
+                            <hr style="border: 0.5px solid var(--glass-border); margin: 20px 0;">
+                            <span
+                                style="font-family: var(--font-mono); font-size: 0.6rem; color: var(--primary);">KOTLIN
+                                |
+                                RETROFIT | DAGGAR</span>
                         </div>
-                        <i data-lucide="graduation-cap"
-                            style="width: 50px; height: 50px; color: var(--secondary); opacity: 0.6;"></i>
+                    </div>
+                    <div class="project-card">
+                        <div class="project-content">
+                            <span
+                                style="color: var(--secondary); font-family: var(--font-mono); font-size: 0.7rem;">NLP_MODULE_01</span>
+                            <h3>RESUME MATCHER</h3>
+                            <p>Semantic scoring engine utilizing TF-IDF and Cosine Similarity for recruiter
+                                optimization.
+                            </p>
+                            <hr style="border: 0.5px solid var(--glass-border); margin: 20px 0;">
+                            <span
+                                style="font-family: var(--font-mono); font-size: 0.6rem; color: var(--primary);">SCIKIT
+                                LEARN | PANDAS</span>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <!-- Projects -->
-        <section id="projects">
-            <span class="section-tag">/MODULES</span>
-            <h2 style="font-family: var(--font-hdr); font-size: 3rem; margin-bottom: 40px;">Hardware Work</h2>
-            <div class="project-grid reveal">
-                <div class="project-card">
-                    <div class="project-content">
-                        <span
-                            style="color: var(--secondary); font-family: var(--font-mono); font-size: 0.7rem;">CV_MODULE_01</span>
-                        <h3>AI PROCTORING</h3>
-                        <p>Intelligent exam surveillance with gaze tracking and MediaPipe pose triangulation.</p>
-                        <hr style="border: 0.5px solid var(--glass-border); margin: 20px 0;">
-                        <span style="font-family: var(--font-mono); font-size: 0.6rem; color: var(--primary);">PY TORCH
-                            | OPEN CV | FLASK</span>
+            <!-- Research -->
+            <section id="research">
+                <span class="section-tag">/INNOVATION</span>
+                <h2 style="font-family: var(--font-hdr); font-size: 3rem; margin-bottom: 40px;">Lab Research</h2>
+                <div class="research-box reveal">
+                    <div class="glass-panel">
+                        <h3 style="font-family: var(--font-hdr); color: var(--secondary); margin-bottom: 20px;">Quantum
+                            AI
+                        </h3>
+                        <p style="color: var(--text-dim);">Investigating the synergy between quantum entanglement and AI
+                            optimization patterns.</p>
+                        <div class="wave-container" id="q-wave"></div>
+                    </div>
+                    <div class="glass-panel">
+                        <h3 style="font-family: var(--font-hdr); color: var(--primary); margin-bottom: 20px;">
+                            Bioacoustics
+                        </h3>
+                        <p style="color: var(--text-dim);">Applying CNN models to sound-based biological signal
+                            detection
+                            and environmental health tracking.</p>
+                        <div class="wave-container" id="b-wave"></div>
                     </div>
                 </div>
-                <div class="project-card">
-                    <div class="project-content">
-                        <span
-                            style="color: var(--secondary); font-family: var(--font-mono); font-size: 0.7rem;">CV_MODULE_02</span>
-                        <h3>CHEATING MONITOR</h3>
-                        <p>Real-time head movement and tab-switching surveillance for secure assessments.</p>
-                        <hr style="border: 0.5px solid var(--glass-border); margin: 20px 0;">
-                        <span style="font-family: var(--font-mono); font-size: 0.6rem; color: var(--primary);">CV2 |
-                            BEHAVIORAL AI</span>
-                    </div>
-                </div>
-                <div class="project-card">
-                    <div class="project-content">
-                        <span
-                            style="color: var(--secondary); font-family: var(--font-mono); font-size: 0.7rem;">APP_MODULE_01</span>
-                        <h3>MOVIE OTT APP</h3>
-                        <p>Modern Android application featuring MVVM architecture and high-fidelity video throughput.
-                        </p>
-                        <hr style="border: 0.5px solid var(--glass-border); margin: 20px 0;">
-                        <span style="font-family: var(--font-mono); font-size: 0.6rem; color: var(--primary);">KOTLIN |
-                            RETROFIT | DAGGAR</span>
-                    </div>
-                </div>
-                <div class="project-card">
-                    <div class="project-content">
-                        <span
-                            style="color: var(--secondary); font-family: var(--font-mono); font-size: 0.7rem;">NLP_MODULE_01</span>
-                        <h3>RESUME MATCHER</h3>
-                        <p>Semantic scoring engine utilizing TF-IDF and Cosine Similarity for recruiter optimization.
-                        </p>
-                        <hr style="border: 0.5px solid var(--glass-border); margin: 20px 0;">
-                        <span style="font-family: var(--font-mono); font-size: 0.6rem; color: var(--primary);">SCIKIT
-                            LEARN | PANDAS</span>
-                    </div>
-                </div>
-            </div>
-        </section>
+            </section>
 
-        <!-- Research -->
-        <section id="research">
-            <span class="section-tag">/INNOVATION</span>
-            <h2 style="font-family: var(--font-hdr); font-size: 3rem; margin-bottom: 40px;">Lab Research</h2>
-            <div class="research-box reveal">
-                <div class="glass-panel">
-                    <h3 style="font-family: var(--font-hdr); color: var(--secondary); margin-bottom: 20px;">Quantum AI
-                    </h3>
-                    <p style="color: var(--text-dim);">Investigating the synergy between quantum entanglement and AI
-                        optimization patterns.</p>
-                    <div class="wave-container" id="q-wave"></div>
-                </div>
-                <div class="glass-panel">
-                    <h3 style="font-family: var(--font-hdr); color: var(--primary); margin-bottom: 20px;">Bioacoustics
-                    </h3>
-                    <p style="color: var(--text-dim);">Applying CNN models to sound-based biological signal detection
-                        and environmental health tracking.</p>
-                    <div class="wave-container" id="b-wave"></div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Achievements -->
-        <section id="achievements">
-            <span class="section-tag">/HONORS</span>
-            <h2 style="font-family: var(--font-hdr); font-size: 3rem; margin-bottom: 40px;">Milestones</h2>
-            <div class="project-grid reveal">
-                <div class="glass-panel" style="text-align: center;">
-                    <i data-lucide="award"
-                        style="width: 40px; height: 40px; color: var(--primary); margin-bottom: 20px;"></i>
-                    <p>Inter-Collegiate Fest Winner</p>
-                </div>
-                <div class="glass-panel" style="text-align: center;">
-                    <i data-lucide="users"
-                        style="width: 40px; height: 40px; color: var(--secondary); margin-bottom: 20px;"></i>
-                    <p>Class Representative (3 Yrs)</p>
-                </div>
-                <div class="glass-panel" style="text-align: center;">
-                    <i data-lucide="trophy" style="width: 40px; height: 40px; color: #fff; margin-bottom: 20px;"></i>
-                    <p>University Volleyball/Cricket Squad</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Contact -->
-        <section id="contact">
-            <div class="glass-panel reveal" style="padding: 80px;">
-                <h2 style="font-family: var(--font-hdr); font-size: 3.5rem; margin-bottom: 40px;">Ready to
-                    build<br><span style="color: var(--secondary)">the future?</span></h2>
-                <div style="display: flex; gap: 40px; flex-wrap: wrap;">
-                    <a href="mailto:shashank.vathar@bsccmh.christuniversity.in" class="nav-link"
-                        style="font-size: 1.2rem;"><i data-lucide="mail"></i> Email Me</a>
-                    <a href="tel:+919900616593" class="nav-link" style="font-size: 1.2rem;"><i data-lucide="phone"></i>
-                        Call Signal</a>
-                    <div style="display:flex; gap: 20px;">
-                        <a href="https://linkedin.com/in/shashank-mv-a929952" class="social-icon"><i
-                                data-lucide="linkedin"></i></a>
-                        <a href="https://instagram.com/shashankmv_18" class="social-icon"><i
-                                data-lucide="instagram"></i></a>
+            <!-- Achievements -->
+            <section id="achievements">
+                <span class="section-tag">/HONORS</span>
+                <h2 style="font-family: var(--font-hdr); font-size: 3rem; margin-bottom: 40px;">Milestones</h2>
+                <div class="project-grid reveal">
+                    <div class="glass-panel" style="text-align: center;">
+                        <i data-lucide="award"
+                            style="width: 40px; height: 40px; color: var(--primary); margin-bottom: 20px;"></i>
+                        <p>Inter-Collegiate Fest Winner</p>
+                    </div>
+                    <div class="glass-panel" style="text-align: center;">
+                        <i data-lucide="users"
+                            style="width: 40px; height: 40px; color: var(--secondary); margin-bottom: 20px;"></i>
+                        <p>Class Representative (3 Yrs)</p>
+                    </div>
+                    <div class="glass-panel" style="text-align: center;">
+                        <i data-lucide="trophy"
+                            style="width: 40px; height: 40px; color: #fff; margin-bottom: 20px;"></i>
+                        <p>University Volleyball/Cricket Squad</p>
                     </div>
                 </div>
-                <form style="margin-top: 60px; display: grid; gap: 20px;">
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-                        <input type="text" placeholder="Identity"
-                            style="background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); padding: 15px; color: #fff; border-radius: 10px;">
-                        <input type="email" placeholder="Mail Port"
-                            style="background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); padding: 15px; color: #fff; border-radius: 10px;">
-                    </div>
-                    <textarea rows="5" placeholder="Transmission Message..."
-                        style="background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); padding: 15px; color: #fff; border-radius: 10px;"></textarea>
-                    <button type="submit" class="mag-btn" style="width: 250px;">Transmit Signal</button>
-                </form>
-            </div>
-        </section>
+            </section>
 
-        <footer
-            style="padding: 60px 10%; text-align: center; color: var(--text-dim); font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 3px;">
-            &copy; 2026 SHASHANK M VATHAR | STABLE PROTOCOL v4.2
-        </footer>
-    </main>
+            <!-- Contact -->
+            <section id="contact">
+                <div class="glass-panel reveal">
+                    <h2 style="font-family: var(--font-hdr); font-size: 3.5rem; margin-bottom: 40px;">Ready to
+                        build<br><span style="color: var(--secondary)">the future?</span></h2>
+                    <div style="display: flex; gap: 40px; flex-wrap: wrap;">
+                        <a href="mailto:shashank.vathar@bsccmh.christuniversity.in" class="nav-link"
+                            style="font-size: 1.2rem;"><i data-lucide="mail"></i> Email Me</a>
+                        <a href="tel:+919900616593" class="nav-link" style="font-size: 1.2rem;"><i
+                                data-lucide="phone"></i>
+                            Call Signal</a>
+                        <div style="display:flex; gap: 20px;">
+                            <a href="https://linkedin.com/in/shashank-mv-a929952" class="social-icon"><i
+                                    data-lucide="linkedin"></i></a>
+                            <a href="https://instagram.com/shashankmv_18" class="social-icon"><i
+                                    data-lucide="instagram"></i></a>
+                        </div>
+                    </div>
+                    <form style="margin-top: 60px; display: grid; gap: 20px;">
+                        <div class="contact-form-grid"
+                            style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                            <input type="text" placeholder="Identity"
+                                style="background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); padding: 15px; color: #fff; border-radius: 10px;">
+                            <input type="email" placeholder="Mail Port"
+                                style="background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); padding: 15px; color: #fff; border-radius: 10px;">
+                        </div>
+                        <textarea rows="5" placeholder="Transmission Message..."
+                            style="background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); padding: 15px; color: #fff; border-radius: 10px;"></textarea>
+                        <button type="submit" class="mag-btn" style="width: 100%; max-width: 250px;">Transmit
+                            Signal</button>
+                    </form>
+                </div>
+            </section>
+
+            <footer
+                style="padding: 60px 10%; text-align: center; color: var(--text-dim); font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 3px;">
+                &copy; 2026 SHASHANK M VATHAR | COSMIC_OS_v6.0_STABLE
+            </footer>
+        </main>
+    </div>
 
     <script>
         // --- Core Init ---
@@ -874,8 +1033,19 @@
             const tl = gsap.timeline({
                 onComplete: () => {
                     gsap.to("#intro-overlay", {
-                        opacity: 0, duration: 1.5, ease: "power2.inOut", onComplete: () => {
+                        opacity: 0,
+                        duration: 1.5,
+                        ease: "power2.inOut",
+                        onComplete: () => {
                             document.getElementById('intro-overlay').style.display = 'none';
+                            // Animate Hero Images
+                            gsap.to(".hero-img-wrapper", {
+                                opacity: 1,
+                                y: 0,
+                                duration: 1.5,
+                                stagger: 0.3,
+                                ease: "power3.out"
+                            });
                         }
                     });
                     gsap.to("#main-app", { visibility: 'visible', opacity: 1, duration: 2, ease: "power4.out" });
